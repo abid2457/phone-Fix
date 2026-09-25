@@ -178,13 +178,14 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className={cn('app-shell', collapsed && 'sidebar-collapsed')}>
       <aside className={cn('sidebar', drawer && 'sidebar-open')}>
         <div className="brand">
-          <div className="brand-mark">
-            <FixFlowIcon className="w-8 h-8" />
-          </div>
-          {!collapsed && (
-            <div>
-              <strong>FixFlow</strong>
-              <small>Mobile Service Management</small>
+          {!collapsed ? (
+            <div className="px-1">
+              <strong className="text-[17px] font-bold tracking-tight text-foreground">FixFlow</strong>
+              <small className="block text-[10px] text-muted-foreground font-medium mt-0.5">Mobile Service Management</small>
+            </div>
+          ) : (
+            <div className="px-1">
+              <strong className="text-base font-bold tracking-tight text-foreground">FF</strong>
             </div>
           )}
           <button
