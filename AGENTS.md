@@ -1,10 +1,25 @@
-<!-- LOVABLE:BEGIN -->
-> [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
-> published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
-> user will likely lose their project history.
->
-> Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
-<!-- LOVABLE:END -->
+# FixFlow Pro Developer Notes
+
+FixFlow Pro is a modern web application for Mobile Phone Repair Shop Service Management.
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server (runs at http://localhost:8080)
+npm run dev
+
+# Build production bundle
+npm run build
+
+# Run linter
+npm run lint
+```
+
+## Tech Stack
+- React 19 + TypeScript
+- TanStack Router & Start
+- Tailwind CSS & Radix UI primitives
+- Lucide Icons & Recharts

@@ -7,10 +7,9 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppStore } from "../lib/app-store";
 import { AppShell } from "../components/app/shell";
 import { Toaster } from "../components/ui/sonner";
@@ -38,11 +37,8 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+  console.error("FixFlow Application Error:", error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -51,7 +47,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           This page didn't load
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Something went wrong. You can try refreshing or head back home.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -80,18 +76,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FixFlow — Mobile Service Management" },
-      { name: "description", content: "Professional mobile repair service management." },
-      { name: "author", content: "FixFlow" },
+      { title: "FixFlow Pro — Mobile Phone Repair & Service Management" },
+      { name: "description", content: "Complete operating system for mobile repair shops. Job card intake, technician bench, inventory, WhatsApp updates & billing." },
+      { name: "author", content: "FixFlow Pro" },
+      { property: "og:site_name", content: "FixFlow Pro" },
+      { property: "og:title", content: "FixFlow Pro — Mobile Phone Repair & Service Management" },
+      { property: "og:description", content: "Complete operating system for mobile repair shops. Job card intake, technician bench, inventory, WhatsApp updates & billing." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@FixFlowPro" },
+      { name: "twitter:creator", content: "@abid2457" },
+      { name: "twitter:title", content: "FixFlow Pro — Mobile Phone Repair & Service Management" },
+      { name: "twitter:description", content: "Complete operating system for mobile repair shops. Job card intake, technician bench, inventory, WhatsApp updates & billing." },
+      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "alternate icon", href: "/favicon.ico" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" },

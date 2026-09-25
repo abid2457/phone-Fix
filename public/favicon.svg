@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="ff-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="50%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="ff-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8FBF5C" />
+      <stop offset="50%" stop-color="#22C55E" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="ff-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+    <filter id="ff-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#8FBF5C" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#ff-bg)" stroke="url(#ff-accent)" stroke-width="8" stroke-opacity="0.3"/>
+
+  <!-- Phone Outline -->
+  <rect x="140" y="86" width="232" height="340" rx="44" fill="#1E293B" fill-opacity="0.8" stroke="url(#ff-blue)" stroke-width="12" filter="url(#ff-glow)"/>
+
+  <!-- Speaker ear piece -->
+  <rect x="220" y="112" width="72" height="8" rx="4" fill="#94A3B8"/>
+
+  <!-- FixFlow Wave / Pulse / Flow Line with Wrench & Lightning Accent -->
+  <!-- Dynamic Lightning / Flow Path -->
+  <path d="M280 150 L210 260 H270 L232 350 L318 240 H258 L280 150Z" fill="url(#ff-accent)" filter="url(#ff-glow)" />
+
+  <!-- Orbiting Flow Dots -->
+  <circle cx="176" cy="380" r="10" fill="#38BDF8"/>
+  <circle cx="336" cy="380" r="10" fill="#8FBF5C"/>
+  <circle cx="256" cy="380" r="14" fill="#F8FAFC"/>
+</svg>

@@ -3131,23 +3131,36 @@ Most importantly:
 
 MAKE THE UI BEAUTIFUL, PREMIUM, ELEGANT, PROFESSIONAL, INTERACTIVE, FAST, SIMPLE TO USE, AND HIGHLY IMPRESSIVE WITHOUT BECOMING CLUTTERED.
 
-This project was built with [Lovable](https://lovable.dev).
+---
 
-## Build with Lovable
+## Getting Started
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/dcc661d5-59b7-4ba9-af4e-e489be13fb93).
+### Prerequisites
+- Node.js (v18+)
+- npm or pnpm or bun
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+### Installation & Development
 
-## Development
+```bash
+# Clone the repository
+git clone https://github.com/abid2457/phone-Fix.git
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+# Navigate into project directory
+cd phone-Fix
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
+
+The application will be accessible at [http://localhost:8080](http://localhost:8080).
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
