@@ -6,3 +6,4 @@ export interface Job { id:string; customerId:string; customer:string; phone:stri
 export interface Part { id:string; name:string; sku:string; category:string; stock:number; minimum:number; cost:number; price:number; supplier:string }
 export interface Invoice { id:string; jobId:string; customer:string; amount:number; payment:PaymentStatus; date:string; status:'Issued'|'Paid'|'Overdue' }
 export interface AppNotification { id:string; kind:'Jobs'|'Payments'|'Repairs'|'System'; title:string; message:string; time:string; read:boolean }
+export interface StoreLocation { id:string; name:string; location:string; activeJobs:number; readyJobs:number; todayRevenue:number }

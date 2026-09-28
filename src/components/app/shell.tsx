@@ -27,8 +27,15 @@ import {
   Wrench,
   X,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/lib/app-store';
 import { cn } from '@/lib/utils';
@@ -99,7 +106,7 @@ export function FixFlowIcon({ className = 'w-6 h-6' }: { className?: string }) {
 export function AppShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { jobs, customers, notifications } = useAppStore();
+  const { jobs, customers, notifications, currentStore, setCurrentStore, stores } = useAppStore();
   const [collapsed, setCollapsed] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -306,11 +313,48 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Bell />
               <span className="notification-dot" />
             </Link>
-            <button className="store-switch">
-              <Store />
-              <span>ABC Mobile Store</span>
-              <ChevronDown />
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="store-switch cursor-pointer" aria-label="Switch store location">
+                  <Store className="w-4 h-4 text-primary" />
+                  <span className="font-semibold">{currentStore}</span>
+                  <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 p-1.5 shadow-lg">
+                <DropdownMenuLabel className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground px-2 py-1.5">
+                  Store Locations
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {stores.map((s) => (
+                  <DropdownMenuItem
+                    key={s.id}
+                    onClick={() => {
+                      setCurrentStore(s.name);
+                      toast.success(`Active location switched to ${s.name}`, {
+                        description: `Viewing operations for ${s.location} branch.`,
+                      });
+                    }}
+                    className={`flex items-center justify-between px-2.5 py-2 rounded-lg cursor-pointer text-xs ${
+                      currentStore === s.name ? 'bg-accent font-bold text-primary' : ''
+                    }`}
+                  >
+                    <div>
+                      <strong className="block text-foreground">{s.name}</strong>
+                      <small className="block text-[10px] text-muted-foreground">{s.location} · {s.activeJobs} active jobs</small>
+                    </div>
+                    {currentStore === s.name && <Check className="w-4 h-4 text-primary" />}
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => navigate({ to: '/stores' })}
+                  className="text-xs text-primary font-semibold px-2.5 py-2 cursor-pointer"
+                >
+                  Manage All Stores &rarr;
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <div className="header-user">
               <div className="avatar">A</div>
               <div>
