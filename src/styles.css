@@ -153,3 +153,41 @@ body{background:radial-gradient(circle at 85% 10%,rgba(143,191,92,.13),transpare
 @media(max-width:650px){body{background:radial-gradient(circle at 90% 5%,rgba(143,191,92,.11),transparent 27%),var(--background)}}
 @media print{body{background:#F0F2EA!important;color:#20291B!important}.panel,.detail-header,.page-intro,.form-shell{background:#F0F2EA!important;border-color:rgba(61,76,48,.14)!important}}
 .dark .metrics-grid .metric-card:last-child .metric-value{color:#F1EDE3}
+
+/* Hide all scrollbars in sidebar completely */
+.sidebar,
+.sidebar nav,
+.sidebar * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.sidebar::-webkit-scrollbar,
+.sidebar nav::-webkit-scrollbar,
+.sidebar *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+.sidebar {
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+}
+
+.sidebar nav {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.sidebar-foot,
+.nav-group,
+.nav-item,
+.user-mini {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
