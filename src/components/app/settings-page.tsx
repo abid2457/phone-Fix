@@ -4,6 +4,8 @@ import {
   Building2,
   Check,
   ClipboardList,
+  Copy,
+  ExternalLink,
   FileText,
   Key,
   Lock,
@@ -17,6 +19,7 @@ import {
   RefreshCw,
   Send,
   Settings2,
+  Share2,
   ShieldCheck,
   Smartphone,
   Sparkles,
@@ -178,6 +181,34 @@ export function SettingsPage() {
   const [layoutDensity, setLayoutDensity] = useState('comfortable');
   const [soundChime, setSoundChime] = useState(true);
   const [smoothTransitions, setSmoothTransitions] = useState(true);
+
+  // Share Application State
+  const [copiedShare, setCopiedShare] = useState(false);
+  const shareAppUrl = typeof window !== 'undefined' ? window.location.origin : 'https://phonefix-omega.vercel.app';
+  const shareText = 'Check out FixFlow Pro — Modern Operating System & Management for Mobile Phone Repair Centers!';
+
+  const handleCopyShareLink = () => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(shareAppUrl);
+      setCopiedShare(true);
+      toast.success('Application link copied to clipboard!');
+      setTimeout(() => setCopiedShare(false), 2000);
+    }
+  };
+
+  const handleTwitterShare = () => {
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      shareText,
+    )}&url=${encodeURIComponent(shareAppUrl)}&hashtags=MobileRepair,FixFlow,ServiceManagement`;
+    window.open(tweetUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleWhatsAppShare = () => {
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      `${shareText} ${shareAppUrl}`,
+    )}`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+  };
 
   const currentSection = SECTIONS.find((s) => s.id === activeTab) || SECTIONS[0];
   const CurrentIcon = currentSection.icon;
@@ -1093,6 +1124,69 @@ export function SettingsPage() {
                     <span>Enable fluid animations and glassmorphism hover effects.</span>
                   </div>
                   <input type="checkbox" checked={smoothTransitions} onChange={(e) => setSmoothTransitions(e.target.checked)} className="w-4 h-4" />
+                </div>
+              </div>
+
+              {/* Share Application Link */}
+              <div className="space-y-3 pt-4 border-t border-border">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <strong className="text-xs font-bold text-foreground block">Share Application Link</strong>
+                    <span className="text-[10px] text-muted-foreground block mt-0.5">
+                      Share the live FixFlow Pro service demo with clients, partners, or on social media.
+                    </span>
+                  </div>
+                  <Share2 className="w-4 h-4 text-primary" />
+                </div>
+
+                <div className="rounded-xl border border-border bg-card p-4 space-y-4 shadow-xs">
+                  <div className="flex items-center gap-3">
+                    <input
+                      readOnly
+                      value={shareAppUrl}
+                      className="flex-1 rounded-lg border border-input bg-muted/50 px-3 py-2 text-xs font-mono text-foreground"
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleCopyShareLink}
+                      className="shrink-0 flex items-center gap-1.5"
+                    >
+                      {copiedShare ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-500" />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          Copy Link
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  <div className="flex gap-2.5">
+                    <Button
+                      size="sm"
+                      onClick={handleTwitterShare}
+                      className="flex-1 bg-[#000000] hover:bg-[#18181b] text-white flex items-center justify-center gap-2 text-xs"
+                    >
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      </svg>
+                      Share on X (Twitter)
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleWhatsAppShare}
+                      className="flex-1 flex items-center justify-center gap-2 text-xs"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-emerald-500" />
+                      Share on WhatsApp
+                    </Button>
+                  </div>
                 </div>
               </div>
 

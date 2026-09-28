@@ -111,10 +111,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [shareOpen, setShareOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [query, setQuery] = useState('');
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('light');
 
   useEffect(() => {
     const fn = (e: KeyboardEvent) => {
@@ -126,13 +123,6 @@ export function AppShell({ children }: { children: ReactNode }) {
     window.addEventListener('keydown', fn);
     return () => window.removeEventListener('keydown', fn);
   }, []);
-
-  useEffect(() => {
-    const dark =
-      theme === 'dark' ||
-      (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    document.documentElement.classList.toggle('dark', dark);
-  }, [theme]);
 
   const results =
     query.length > 1
@@ -162,25 +152,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       : path.startsWith('/technicians/')
         ? 'Technician Workspace'
         : titleMap[path] ?? 'FixFlow';
-
-  const shareUrl = typeof window !== 'undefined' ? window.location.origin : 'https://github.com/abid2457/phone-Fix';
-  const shareText = 'Check out FixFlow Pro — Modern Operating System & Management for Mobile Phone Repair Centers!';
-
-  const handleCopy = () => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      toast.success('Link copied to clipboard!');
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const handleTwitterShare = () => {
-    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      shareText,
-    )}&url=${encodeURIComponent(shareUrl)}&hashtags=MobileRepair,FixFlow,ServiceManagement`;
-    window.open(tweetUrl, '_blank', 'noopener,noreferrer');
-  };
 
   return (
     <div className={cn('app-shell', collapsed && 'sidebar-collapsed')}>
@@ -279,33 +250,6 @@ export function AppShell({ children }: { children: ReactNode }) {
             <kbd>⌘ K</kbd>
           </button>
           <div className="header-tools">
-            <div className="theme-switch" aria-label="Theme">
-              <button
-                onClick={() => setTheme('light')}
-                className={theme === 'light' ? 'selected' : ''}
-                title="Light"
-              >
-                <Sun />
-              </button>
-              <button
-                onClick={() => setTheme('dark')}
-                className={theme === 'dark' ? 'selected' : ''}
-                title="Dark"
-              >
-                <Moon />
-              </button>
-            </div>
-
-            {/* Share / Twitter Cards Button */}
-            <button
-              onClick={() => setShareOpen(true)}
-              className="icon-btn"
-              aria-label="Share FixFlow Pro"
-              title="Share FixFlow Pro & Twitter Card"
-            >
-              <Share2 />
-            </button>
-
             <Link
               to="/notifications"
               className="icon-btn"
@@ -457,78 +401,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                 ),
               )
             )}
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Share / Twitter Card Dialog */}
-      <Dialog open={shareOpen} onOpenChange={setShareOpen}>
-        <DialogContent className="max-w-md p-6">
-          <DialogTitle className="text-lg font-bold flex items-center gap-2">
-            <Share2 className="w-5 h-5 text-primary" />
-            Share FixFlow Pro
-          </DialogTitle>
-          <p className="text-xs text-muted-foreground mt-1">
-            Share FixFlow Pro on X (Twitter) or copy the link with rich Open Graph preview cards.
-          </p>
-
-          {/* Card Preview */}
-          <div className="mt-4 rounded-xl border border-border bg-card overflow-hidden shadow-sm">
-            <div className="relative aspect-video bg-muted overflow-hidden">
-              <img
-                src="/og-image.png"
-                alt="FixFlow Pro Twitter Card Preview"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/og-image.svg';
-                }}
-              />
-              <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-semibold text-white">
-                Twitter Card Preview
-              </div>
-            </div>
-            <div className="p-3">
-              <div className="text-[10px] text-primary font-bold uppercase tracking-wider">
-                FixFlow Pro
-              </div>
-              <div className="text-sm font-semibold text-foreground mt-0.5">
-                FixFlow Pro — Mobile Phone Repair & Service Management
-              </div>
-              <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                Complete operating system for mobile phone repair shops. Job card intake, technician bench, inventory & billing.
-              </div>
-            </div>
-          </div>
-
-          {/* Share Actions */}
-          <div className="mt-5 flex flex-col gap-2.5">
-            <Button
-              onClick={handleTwitterShare}
-              className="w-full bg-[#000000] hover:bg-[#18181b] text-white flex items-center justify-center gap-2 py-2.5 text-xs font-semibold rounded-lg"
-            >
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-              Share on X (Twitter)
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={handleCopy}
-              className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-semibold rounded-lg"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-500" />
-                  Link Copied!
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  Copy Share Link
-                </>
-              )}
-            </Button>
           </div>
         </DialogContent>
       </Dialog>
